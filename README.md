@@ -2,50 +2,123 @@
 {
   "depends_on": [],
   "author": "Stephan Bökelmann",
-  "first_used": "2025-03-17",
-  "keywords": ["learning", "exercises", "education", "practice"]
+  "first_used": "2025-04-07",
+  "keywords": ["python", "http.server"]
 }
 --->
 
-# Learning Through Exercises
+# Serving Static Files with `http.server`
 
-## 1) Introduction
-Learning by doing is one of the most effective methods to acquire new knowledge and skills. Rather than passively consuming information, actively engaging in problem-solving fosters deeper understanding and long-term retention. By working through structured exercises, students can grasp complex concepts in a more intuitive and applicable way. This approach is particularly beneficial in technical fields like programming, mathematics, and engineering.
+## Introduction
 
-### 1.1) Further Readings and Other Sources
-- [The Importance of Practice in Learning](https://www.sciencedirect.com/science/article/pii/S036013151300062X)
-- "The Art of Learning" by Josh Waitzkin
-- [How to Learn Effectively: 5 Key Strategies](https://www.edutopia.org/article/5-research-backed-learning-strategies)
+In the early days of the internet, web servers were simple programs that served static documents—plain HTML files, images, and scripts—over HTTP to requesting clients. These early servers operated in a straightforward manner: when a browser made a request, the server responded with a file from the local disk. This mode of operation, known as **static file serving**, still forms the basis of all web communication today, even as web technologies have evolved dramatically.
 
-## 2) Tasks
-1. **Write a Summary**: Summarize the concept of "learning by doing" in 3-5 sentences.
-2. **Example Identification**: List three examples from your own experience where learning through exercises helped you understand a topic better.
-3. **Create an Exercise**: Design a simple exercise for a topic of your choice that someone else could use to practice.
-4. **Follow an Exercise**: Find an online tutorial that includes exercises and complete at least two of them.
-5. **Modify an Existing Exercise**: Take a basic problem from a textbook or online course and modify it to make it slightly more challenging.
-6. **Pair Learning**: Explain a concept to a partner and guide them through an exercise without giving direct answers.
-7. **Review Mistakes**: Look at an exercise you've previously completed incorrectly. Identify why the mistake happened and how to prevent it in the future.
-8. **Time Challenge**: Set a timer for 10 minutes and try to solve as many simple exercises as possible on a given topic.
-9. **Self-Assessment**: Create a checklist to evaluate your own performance in completing exercises effectively.
-10. **Reflect on Progress**: Write a short paragraph on how this structured approach to exercises has influenced your learning.
+Python, true to its philosophy of "batteries included," offers a built-in tool for this exact purpose: the `http.server` module. With a single command, Python can be used to launch a minimal HTTP file server, enabling users to serve local directories over the network. This makes it an ideal tool for quick testing, local development, and educational exploration.
 
-<details>
-  <summary>Tip for Task 5</summary>
-  Try making small adjustments first, such as increasing the difficulty slightly or adding an extra constraint.
-</details>
+However, it is important to distinguish between this form of static serving and **dynamic web applications**, which involve server-side processing, stateful user sessions, database interaction, or API logic. Unlike production-grade servers such as Nginx, Apache, or Python frameworks like Flask and FastAPI, `http.server` does not support dynamic content generation, authentication, middleware, or routing logic.
 
-## 3) Questions
-1. What are the main benefits of learning through exercises compared to passive learning?
-2. How do exercises improve long-term retention?
-3. Can you think of a subject where learning through exercises might be less effective? Why?
-4. What role does feedback play in learning through exercises?
-5. How can self-designed exercises improve understanding?
-6. Why is it beneficial to review past mistakes in exercises?
-7. How does explaining a concept to someone else reinforce your own understanding?
-8. What strategies can you use to stay motivated when practicing with exercises?
-9. How can timed challenges contribute to learning efficiency?
-10. How do exercises help bridge the gap between theory and practical application?
+This exercise introduces the usage of Python's `http.server` for static file serving, while also outlining its limitations. By understanding both its capabilities and its constraints, learners gain foundational insight into the architecture of modern web servers and the transition from static documents to fully dynamic, interactive applications.
 
-## 4) Advice
-Practice consistently and seek out diverse exercises that challenge different aspects of a topic. Combine exercises with reflection and feedback to maximize your learning efficiency. Don't hesitate to adapt exercises to fit your own needs and ensure that you're actively engaging with the material, rather than just going through the motions.
 
+
+## Tasks
+
+1. Prepare a Simple Web Project
+
+Create a new folder with a basic HTML file:
+
+```bash
+mkdir ~/my_web_test && cd ~/my_web_test
+```
+
+Inside this directory, create an HTML file:
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello Server</title>
+</head>
+<body>
+  <h1>Hello from http.server!</h1>
+  <p>This page is being served locally using Python.</p>
+</body>
+</html>
+```
+
+Save the file as `index.html`.
+
+
+2. Start the Local Server
+
+While still in the `~/my_web_test` directory, run:
+
+```bash
+python3 -m http.server
+```
+
+By default, this starts a server on port 8000. Open your browser and visit:
+
+```
+http://localhost:8000
+```
+
+You should see your HTML page rendered in the browser.
+
+---
+
+3. Explore Directory Listings
+
+If there is no `index.html`, Python will automatically list the directory contents. Try renaming your file and reloading the page to see what happens.
+
+```bash
+mv index.html hello.html
+```
+
+Then reload `http://localhost:8000` in your browser.
+
+---
+
+4. Change the Port
+
+To run the server on a different [port](github.com/STEMgraph/missing):
+
+```bash
+python3 -m http.server 9000
+```
+
+Then visit:
+
+```
+http://localhost:9000
+```
+
+5. Retrieve the Page via Terminal Tools
+
+To simulate a simple HTTP request from the command line, try retrieving the web page using tools like `wget` and `curl`. These commands are useful for debugging and scripting.
+
+```bash
+wget http://localhost:8000 -O page_wget.html
+curl http://localhost:8000 -o page_curl.html
+```
+
+These commands download the `index.html` content served by your Python server and store them locally in the respective files. You can inspect the files using `less`, `cat`, or open them in a browser or editor to verify their contents.
+
+> 💡 Tip: Try comparing the contents of the two files using `diff page_wget.html page_curl.html`.
+
+
+## Questions
+
+1. What happens when you request a directory without an `index.html`?
+2. Why might you want to use a different port than the default 8000?
+3. What are CORS headers, and why might they matter for JavaScript?
+4. Why is `http.server` not suitable for serving Python-based web apps?
+5. What would be a better alternative if you wanted to create a dynamic API in Python?
+
+## Advice
+
+`http.server` is a great way to explore how browsers retrieve files and how directory structures work in the context of the web. It's intentionally limited—which helps you appreciate the purpose of **real web servers** later on.
+
+Think of it as a **training bicycle** for web development. It teaches you the basics of ports, file paths, and browser requests—without the complexities of frameworks or backends. Once you’re confident here, you’ll be ready to build real apps using tools like **Flask**, **FastAPI**, or **Django**.
