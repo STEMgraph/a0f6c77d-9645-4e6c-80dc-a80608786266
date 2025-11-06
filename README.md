@@ -1,7 +1,10 @@
 <!---
 {
 "id": "a0f6c77d-9645-4e6c-80dc-a80608786266",
-  "depends_on": ["3ee0acd9-0f99-4423-b4f3-a0ca84a16422", "7130a694-458e-4e24-80b7-d8673f765e69"],
+  "depends_on": [
+    "3ee0acd9-0f99-4423-b4f3-a0ca84a16422",
+    "7130a694-458e-4e24-80b7-d8673f765e69"
+  ],
   "author": "Stephan Bökelmann",
   "first_used": "2025-04-07",
   "keywords": ["python", "http.server"]
